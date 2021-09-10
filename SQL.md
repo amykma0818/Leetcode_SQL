@@ -1,7 +1,5 @@
 ### Leetcode 1990. Count the Number of Experiments
 
-#### Table: Experiments
-
 experiment_id is the primary key for this table.
 platform is an enum with one of the values ('Android', 'IOS', 'Web').
 experiment_name is an enum with one of the values ('Reading', 'Sports', 'Programming').
@@ -30,7 +28,3 @@ on c.platform=a.platform and c.experiment_name= a.experiment_name
 group by 1,2
 ```
 
-
-```python
-
-```
