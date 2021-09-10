@@ -1,4 +1,4 @@
-### Leetcode 1990. Count the Number of Experiments
+### Leetcode 1990. Count the Number of Experiments (Medium)
 
 experiment_id is the primary key for this table.
 platform is an enum with one of the values ('Android', 'IOS', 'Web').
@@ -28,7 +28,7 @@ on c.platform=a.platform and c.experiment_name= a.experiment_name
 group by 1,2
 ```
 
-### Leetcode 1978: Employees Whose Manager Left the Company
+### Leetcode 1978: Employees Whose Manager Left the Company (Easy)
 Write an SQL query to report the IDs of the employees whose salary is strictly less than $30000 and whose manager left the company. When a manager leaves the company, their information is deleted from the Employees table, but the reports still have their manager_id set to the manager that left.
 
 Return the result table ordered by employee_id.
