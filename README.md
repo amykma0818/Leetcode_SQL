@@ -78,7 +78,8 @@ select recipient_id as caller_id,
 )
 
 select distinct caller_id as user_id from 
-(select caller_id, DATE(call_time) as day, first_value(recipient_id) over(partition by caller_id, DATE(call_time) order by call_time asc) as first_call,
+(select caller_id, DATE(call_time) as day, 
+first_value(recipient_id) over(partition by caller_id, DATE(call_time) order by call_time asc) as first_call,
 first_value(recipient_id) over(partition by caller_id, DATE(call_time) order by call_time desc) as last_call
 from cte) t
 where first_call=last_call
