@@ -51,7 +51,6 @@ Return the result table in any order.
 
 ``` Mysql
 with cte as (
-
     select employee_id, experience, 
     sum(salary) over(partition by experience order by salary asc) as cum_salary
     from Candidates
