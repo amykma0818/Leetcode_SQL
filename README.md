@@ -63,4 +63,11 @@ select 'Junior' as experience, count(*) as accepted_candidates
 from cte where experience="Junior" and cum_salary<= 
 70000 - (select ifnull(max(cum_salary),0) from cte where experience="Senior" and cum_salary<70000 )
 ```
+### Leetcode 1972. First and Last Call On the Same Day
+Write an SQL query to report the IDs of the users whose first and last calls on any day were with the same person. Calls are counted regardless of being the caller or the recipient.
+
+Return the result table in any order.
+
+
+
 
