@@ -38,3 +38,30 @@ from Employees
 where salary<30000 and manager_id not in (select employee_id from Employees) 
 order by employee_id
 ```
+
+### Leetcode 2004. The Number of Seniors and Juniors to Join the Company
+
+A company wants to hire new employees. The budget of the company for the salaries is $70000. The company's criteria for hiring are:
+
+Hiring the largest number of seniors.
+After hiring the maximum number of seniors, use the remaining budget to hire the largest number of juniors.
+Write an SQL query to find the number of seniors and juniors hired under the mentioned criteria.
+
+Return the result table in any order.
+
+``` Mysql
+with cte as (
+
+    select employee_id, experience, 
+    sum(salary) over(partition by experience order by salary asc) as cum_salary
+    from Candidates
+)
+
+select 'Senior' as experience, count(*) as accepted_candidates
+from cte where cum_salary<=70000 and experience="Senior"
+union all
+select 'Junior' as experience, count(*) as accepted_candidates
+from cte where experience="Junior" and cum_salary<= 
+70000 - (select ifnull(max(cum_salary),0) from cte where experience="Senior" and cum_salary<70000 )
+```
+
