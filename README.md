@@ -99,4 +99,35 @@ select employee_id from Salaries
 where employee_id not in (select employee_id from Employees)
 order by employee_id asc
 ```
+### Leetcode 1951. All the Pairs With the Maximum Number of Common Followers
+
+Write an SQL query to find all the pairs of users with the maximum number of common followers. In other words, if the maximum number of common followers between any two users is maxCommon, then you have to return all pairs of users that have maxCommon common followers.
+
+The result table should contain the pairs user1_id and user2_id where user1_id < user2_id.
+
+Return the result table in any order.
+
+``` Mysql
+with cte as (
+select a.user_id as user1_id,
+    b.user_id as user2_id, count(distinct a.follower_id) as common
+from Relations a, Relations b
+where a.follower_id=b.follower_id and a.user_id<b.user_id
+group by a.user_id, b.user_id
+)
+
+select user1_id, user2_id 
+from cte where common=(select max(common) from cte)
+```
+
+
+
+
+
+
+
+
+
+
+
 
