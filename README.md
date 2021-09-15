@@ -147,7 +147,10 @@ group by user1_id, user2_id
 having common_friend>=3
 ```
 
+### Leetcode 1939. Users That Actively Request Confirmation Messages
+Write an SQL query to find the IDs of the users that requested a confirmation message twice within a 24-hour window. Two messages exactly 24 hours apart are considered to be within the window. The action does not affect the answer, only the request time.
 
+Return the result table in any order.
 
 
 
