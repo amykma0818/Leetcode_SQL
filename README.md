@@ -120,9 +120,32 @@ select user1_id, user2_id
 from cte where common=(select max(common) from cte)
 ```
 
+### Leetcode 1949. Strong Friendship
+A friendship between a pair of friends x and y is strong if x and y have at least three common friends. Note x and y have to be friends.
+
+Write an SQL query to find all the strong friendships.
+
+Note that the result table should not contain duplicates with user1_id < user2_id. 
+
+Return the result table in any order.
+
+``` Mysql
+with cte as (
+select * from Friendship
+    union
+select user2_id as user1_id,
+    user1_id as user2_id from Friendship
+)
 
 
-
+select a.user1_id as user1_id, b.user1_id as user2_id,
+count(distinct a.user2_id) as common_friend
+from cte a, cte b
+where a.user1_id<b.user1_id and a.user2_id=b.user2_id 
+and (a.user1_id, b.user1_id) in (select * from cte)
+group by user1_id, user2_id
+having common_friend>=3
+```
 
 
 
