@@ -167,7 +167,8 @@ Return the result table in any order.
 
 ``` mysql
 with cte as(
-select distinct user_id, sum(case when action="confirmed" then 1 else 0 end ) over(partition by user_id)/count(action) over(partition by user_id) as rate
+select distinct user_id, 
+sum(case when action="confirmed" then 1 else 0 end ) over(partition by user_id)/count(action) over(partition by user_id) as rate
 from Confirmations
 )
 
