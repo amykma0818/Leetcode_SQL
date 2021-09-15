@@ -158,6 +158,26 @@ where a.user_id=b.user_id and a.time_stamp<b.time_stamp
 and b.time_stamp <= DATE_ADD(a.time_stamp, Interval 24 HOUR) 
 ```
 
+### Leetcode 1934. Confirmation Rate
+The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places.
+
+Write an SQL query to find the confirmation rate of each user.
+
+Return the result table in any order.
+
+``` mysql
+with cte as(
+select distinct user_id, sum(case when action="confirmed" then 1 else 0 end ) over(partition by user_id)/count(action) over(partition by user_id) as rate
+from Confirmations
+)
+
+select a.user_id, ifnull(round(b.rate,2),0) as confirmation_rate
+from Signups as a 
+left join cte as b
+on a.user_id=b.user_id
+```
+
+
 
 
 
