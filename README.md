@@ -151,7 +151,12 @@ having common_friend>=3
 Write an SQL query to find the IDs of the users that requested a confirmation message twice within a 24-hour window. Two messages exactly 24 hours apart are considered to be within the window. The action does not affect the answer, only the request time.
 
 Return the result table in any order.
-
+``` mysql
+select distinct a.user_id 
+from Confirmations a, Confirmations b
+where a.user_id=b.user_id and a.time_stamp<b.time_stamp
+and b.time_stamp <= DATE_ADD(a.time_stamp, Interval 24 HOUR) 
+```
 
 
 
