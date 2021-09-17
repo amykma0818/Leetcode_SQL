@@ -181,7 +181,25 @@ on a.user_id=b.user_id
 ### Leetcode 1988. Find Cutoff Score for Each School
 
 ### Leetcode 1919. Leetcodify Similar Friends
+Write an SQL query to report the similar friends of Leetcodify users. A user x and user y are similar friends if:
 
+Users x and y are friends, and
+Users x and y listened to the same three or more different songs on the same day.
+Return the result table in any order. Note that you must return the similar pairs of friends the same way they were represented in the input (i.e., always user1_id < user2_id).
+
+``` mysql
+with cte as (
+select a.user_id as user1_id, b.user_id as user2_id,
+    count(distinct a.song_id) as common
+    from Listens a, Listens b
+    where a.user_id<b.user_id and a.song_id=b.song_id and a.day=b.day
+    group by a.user_id, b.user_id, a.day
+    having common>=3
+)
+
+select distinct user1_id, user2_id
+from cte where (user1_id,user2_id) in (select * from Friendship)
+```
 
 
 
