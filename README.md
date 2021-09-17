@@ -200,6 +200,14 @@ select a.user_id as user1_id, b.user_id as user2_id,
 select distinct user1_id, user2_id
 from cte where (user1_id,user2_id) in (select * from Friendship)
 ```
+### Leetcode 1917. Leetcodify Friends Recommendations
+Write an SQL query to recommend friends to Leetcodify users. We recommend user x to user y if:
+
+Users x and y are not friends, and
+Users x and y listened to the same three or more different songs on the same day.
+Note that friend recommendations are unidirectional, meaning if user x and user y should be recommended to each other, the result table should have both user x recommended to user y and user y recommended to user x. Also, note that the result table should not contain duplicates (i.e., user y should not be recommended to user x multiple times.).
+
+Return the result table in any order.
 
 
 
