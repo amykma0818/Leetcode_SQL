@@ -209,7 +209,22 @@ Note that friend recommendations are unidirectional, meaning if user x and user 
 
 Return the result table in any order.
 
+``` mysql
+with cte as (
+select * from Friendship
+    union
+select user2_id as user1_id, user1_id as user2_id
+    from Friendship
+)
 
+select distinct a.user_id, b.user_id as recommended_id 
+    from Listens as a 
+    join Listens as b
+    on a.day=b.day and a.user_id!=b.user_id and a.song_id=b.song_id
+    where (a.user_id, b.user_id) not in (select * from cte)
+    group by a.user_id, b.user_id,a.day
+    having count(distinct a.song_id)>=3
+```
 
 
 
