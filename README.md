@@ -247,3 +247,15 @@ union
 select employee_id from cte where experience="Junior" and 
 cum_salary<= 70000 - (select ifnull(max(cum_salary),0) from cte where experience="Senior" )
 ```
+
+### Leetcode 1907. Count Salary Categories
+Write an SQL query to report the number of bank accounts of each salary category. The salary categories are:
+
+* "Low Salary": All the salaries strictly less than $20000.
+* "Average Salary": All the salaries in the inclusive range [$20000, $50000].
+* "High Salary": All the salaries strictly greater than $50000.
+The result table must contain all three categories. If there are no accounts in a category, then report 0. Return the result table in any order.
+
+The query result format is in the following example.
+
+
