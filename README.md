@@ -245,5 +245,5 @@ select * from
 select employee_id from cte where experience="Senior"
 union
 select employee_id from cte where experience="Junior" and 
-cum_salary<= 70000 - ifnull((select max(cum_salary) from cte where experience="Senior" ),0)
+cum_salary<= 70000 - (select ifnull(max(cum_salary),0) from cte where experience="Senior" )
 ```
