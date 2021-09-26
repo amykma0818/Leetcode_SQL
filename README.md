@@ -279,6 +279,27 @@ Write an SQL query to find all the possible page recommendations for every user.
 * friends_likes: The number of the friends of user_id that like page_id.
 
 Return result table in any order.
+``` mysql 
+with cte as (
+select * from Friendship
+    union
+select user2_id as user1_id, user1_id as user2_id from Friendship
+),
+cte1 as(
+select a.user1_id, b.page_id, count(distinct a.user2_id) as friends_likes
+from cte as a 
+left join Likes as b
+on a.user2_id=b.user_id
+group by a.user1_id, b.page_id
+)
+
+select c.user1_id as user_id, c.page_id,c.friends_likes
+from cte1 c
+left join Likes d
+on c.user1_id=d.user_id and c.page_id=d.page_id
+where d.page_id is null
+```
+
 
 
 
