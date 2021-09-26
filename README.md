@@ -259,4 +259,17 @@ The result table must contain all three categories. If there are no accounts in 
 
 The query result format is in the following example.
 
+``` mysql
+select "Low Salary" as category, count(distinct account_id) as accounts_count 
+from Accounts where income<20000
+union all
+select "Average Salary" as category, count(distinct account_id) as accounts_count 
+from Accounts where income>=20000 and income<=50000
+union all
+select "High Salary" as category, count(distinct account_id) as accounts_count 
+from Accounts where income>50000
+```
+
+
+
 
