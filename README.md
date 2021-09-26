@@ -225,6 +225,13 @@ select distinct a.user_id, b.user_id as recommended_id
     group by a.user_id, b.user_id,a.day
     having count(distinct a.song_id)>=3
 ```
+### Leetcode 2010. The Number of Seniors and Juniors to Join the Company II
+A company wants to hire new employees. The budget of the company for the salaries is $70000. The company's criteria for hiring are:
 
+Keep hiring the senior with the smallest salary until you cannot hire any more seniors.
+Use the remaining budget to hire the junior with the smallest salary.
+Keep hiring the junior with the smallest salary until you cannot hire any more juniors.
+
+Write an SQL query to find the ids of seniors and juniors hired under the mentioned criteria. Return the result table in any order.
 
 
