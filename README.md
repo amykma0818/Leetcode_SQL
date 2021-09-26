@@ -234,4 +234,16 @@ Keep hiring the junior with the smallest salary until you cannot hire any more j
 
 Write an SQL query to find the ids of seniors and juniors hired under the mentioned criteria. Return the result table in any order.
 
+``` mysql
+with cte as (
+select * from 
+(select employee_id, experience, 
+    sum(salary) over(partition by experience order by salary asc) as cum_salary
+    from Candidates) t where cum_salary<=70000
+)
 
+select employee_id from cte where experience="Senior"
+union
+select employee_id from cte where experience="Junior" and 
+cum_salary<= 70000 - ifnull((select max(cum_salary) from cte where experience="Senior" ),0)
+```
