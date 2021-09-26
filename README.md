@@ -269,7 +269,16 @@ union all
 select "High Salary" as category, count(distinct account_id) as accounts_count 
 from Accounts where income>50000
 ```
+### Leetcode 1892. Page Recommendations II
+You are implementing a page recommendation system for a social media website. Your system will recommended a page to user_id if the page is liked by at least one friend of user_id and is not liked by user_id.
 
+Write an SQL query to find all the possible page recommendations for every user. Each recommendation should appear as a row in the result table with these columns:
+
+* user_id: The ID of the user that your system is making the recommendation to.
+* page_id: The ID of the page that will be recommended to user_id.
+* friends_likes: The number of the friends of user_id that like page_id.
+
+Return result table in any order.
 
 
 
