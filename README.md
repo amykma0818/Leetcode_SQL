@@ -356,6 +356,17 @@ from OrdersDetails)
 select distinct order_id from cte
 where max_quan> (select max(avg_quan) from cte)
 ```
+### Leetcode 1853. Convert Date Format
+Write an SQL query to convert each date in Days into a string formatted as "day_name, month_name day, year".
+
+Return the result table in any order.
+``` mysql
+select concat(date_format(day,"%W"),", ",date_format(day,"%M %e"),", ",date_format(day,"%Y")) as day
+from Days
+```
+
+
+
 
 
 
