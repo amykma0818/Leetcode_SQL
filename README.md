@@ -387,7 +387,19 @@ from cte a, cte b
 where a.account_id=b.account_id and period_diff(a.month, b.month)=-1
 order by account_id
 ```
+### Leetcode 1841. League Statistics
+Write an SQL query to report the statistics of the league. The statistics should be built using the played matches where the winning team gets three points and the losing team gets no points. If a match ends with a draw, both teams get one point.
 
+Each row of the result table should contain:
+
+team_name - The name of the team in the Teams table.
+matches_played - The number of matches played as either a home or away team.
+points - The total points the team has so far.
+goal_for - The total number of goals scored by the team across all matches.
+goal_against - The total number of goals scored by opponent teams against this team across all matches.
+goal_diff - The result of goal_for - goal_against.
+
+Return the result table in descending order by points. If two or more teams have the same points, order them in descending order by goal_diff. If there is still a tie, order them by team_name in lexicographical order.
 
 
 
