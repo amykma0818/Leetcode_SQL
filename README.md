@@ -364,6 +364,30 @@ Return the result table in any order.
 select concat(date_format(day,"%W"),", ",date_format(day,"%M %e"),", ",date_format(day,"%Y")) as day
 from Days
 ```
+### Leetcode 1843. Suspicious Bank Accounts
+Write an SQL query to report the IDs of all suspicious bank accounts.
+
+A bank account is suspicious if the total income exceeds the max_income for this account for two or more consecutive months. The total income of an account in some month is the sum of all its deposits in that month (i.e., transactions of the type 'Creditor').
+
+Return the result table in ascending order by transaction_id.
+``` mysql
+with cte as (
+select a.account_id, sum(a.amount) as sum_amount, b.max_income,
+  date_format(a.day,"%Y%m") as month
+from Transactions as a
+join Accounts as b
+on a.account_id=b.account_id
+where a.type="Creditor"
+group by a.account_id, date_format(a.day,"%Y%m")
+having sum_amount>max_income
+)
+
+select distinct a.account_id
+from cte a, cte b
+where a.account_id=b.account_id and period_diff(a.month, b.month)=-1
+order by account_id
+```
+
 
 
 
