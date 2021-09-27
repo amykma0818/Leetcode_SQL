@@ -428,7 +428,16 @@ group by b.team_name
 order by points desc, goal_diff desc, team_name asc
 ```
 
+### Leetcode 1831. Maximum Transaction Each Day
+Write an SQL query to report the IDs of the transactions with the maximum amount on their respective day. If in one day there are multiple such transactions, return all of them.
 
+Return the result table in ascending order by transaction_id.
+``` mysql
+select transaction_id from
+(select *, rank() over(partition by date(day) order by amount desc) as rnk
+from Transactions) t 
+where rnk=1 order by transaction_id asc
+```
 
 
 
