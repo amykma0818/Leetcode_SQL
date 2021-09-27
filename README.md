@@ -348,7 +348,14 @@ The average quantity of an order is calculated as (total quantity of all product
 Write an SQL query to find the order_id of all imbalanced orders.
 
 Return the result table in any order.
+``` mysql
+with cte as 
+(select *, sum(quantity) over(partition by order_id)/count(product_id) over(partition by order_id) as avg_quan, max(quantity) over(partition by order_id) as max_quan
+from OrdersDetails) 
 
+select distinct order_id from cte
+where max_quan> (select max(avg_quan) from cte)
+```
 
 
 
