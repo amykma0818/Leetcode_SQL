@@ -401,7 +401,32 @@ goal_diff - The result of goal_for - goal_against.
 
 Return the result table in descending order by points. If two or more teams have the same points, order them in descending order by goal_diff. If there is still a tie, order them by team_name in lexicographical order.
 
+``` mysql
+with cte as (
+select home_team_id as team_id, home_team_goals as goals_for,
+    away_team_goals as goals_against,
+    (case when home_team_goals>away_team_goals then 3
+    when home_team_goals=away_team_goals then 1
+    else 0 end) as points
+from Matches
+    union all
+select away_team_id as team_id, away_team_goals as goals_for,
+    home_team_goals as goals_against,
+    (case when home_team_goals<away_team_goals then 3
+    when home_team_goals=away_team_goals then 1
+    else 0 end) as points
+from Matches
+)
 
+select b.team_name, count(a.team_id) as matches_played, sum(a.points) as points,
+sum(a.goals_for) as goal_for, sum(a.goals_against) as goal_against,
+sum(a.goals_for)-sum(a.goals_against) as goal_diff
+from cte a
+join Teams b
+on a.team_id=b.team_id
+group by b.team_name
+order by points desc, goal_diff desc, team_name asc
+```
 
 
 
