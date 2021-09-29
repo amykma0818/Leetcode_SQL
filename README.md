@@ -450,7 +450,10 @@ and account_id not in (select account_id from Streams where year(stream_date)=20
 Write an SQL query to report the customers with postive revenue in the year 2021.
 
 Return the result table in any order.
-
+``` mysql
+select distinct customer_id from Customers
+where year=2021 and revenue>0
+```
 
 
 
