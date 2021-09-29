@@ -446,5 +446,12 @@ from Subscriptions
 where (year(start_date)=2021 or year(end_date)=2021) 
 and account_id not in (select account_id from Streams where year(stream_date)=2021)
 ```
+### Leetcode 1821. Find Customers With Positive Revenue this Year
+Write an SQL query to report the customers with postive revenue in the year 2021.
+
+Return the result table in any order.
+
+
+
 
 
