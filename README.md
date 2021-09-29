@@ -438,7 +438,8 @@ select transaction_id from
 from Transactions) t 
 where rnk=1 order by transaction_id asc
 ```
-
+### Leetcode 2020. Number of Accounts That Did Not Stream
+Write an SQL query to report the number of accounts that bought a subscription in 2021 but did not have any stream session.
 
 
 
