@@ -440,6 +440,11 @@ where rnk=1 order by transaction_id asc
 ```
 ### Leetcode 2020. Number of Accounts That Did Not Stream
 Write an SQL query to report the number of accounts that bought a subscription in 2021 but did not have any stream session.
-
+``` mysql
+select count(account_id) as accounts_count  
+from Subscriptions
+where (year(start_date)=2021 or year(end_date)=2021) 
+and account_id not in (select account_id from Streams where year(stream_date)=2021)
+```
 
 
