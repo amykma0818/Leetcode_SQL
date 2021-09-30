@@ -516,7 +516,17 @@ select product_id, 'store3' as store, store3 as price
 from Products
 where store3 is not null
 ```
+### Leetcode 1789. Primary Department for Each Employee
+Employees can belong to multiple departments. When the employee joins other departments, they need to decide which department is their primary department. Note that when an employee belongs to only one department, their primary column is `'N'`.
 
+Write an SQL query to report all the employees with their primary department. For employees who belong to one department, report their only department.
+
+Return the result table in any order.
+```mysql
+select employee_id, department_id from Employee
+where primary_flag='Y' or
+employee_id not in (select employee_id from Employee where primary_flag='Y')
+```
 
 
 
