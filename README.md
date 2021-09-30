@@ -490,7 +490,15 @@ on a.medal=b.user_id
 Write an SQL query to report all the sessions that did not get shown any ads.
 
 Return the result table in any order.
+```mysql
+select session_id from Playback 
+where session_id not in
+(select a.session_id from Playback as a 
+join Ads as b
+on a.customer_id=b.customer_id
+where b.timestamp between a.start_time and a.end_time) 
 
+```
 
 
 
