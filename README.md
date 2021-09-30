@@ -486,5 +486,25 @@ select b.name, b.mail from cte2 as a
 left join Users as b
 on a.medal=b.user_id
 ```
+### Leetcode 1809. Ad-Free Sessions
+Write an SQL query to report all the sessions that did not get shown any ads.
+
+Return the result table in any order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
