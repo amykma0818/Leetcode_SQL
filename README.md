@@ -460,6 +460,31 @@ Write an SQL query to report the name and the mail of all interview candidates. 
 The user won any medal in three or more consecutive contests.
 The user won the gold medal in three or more different contests (not necessarily consecutive).
 Return the result table in any order.
-
+```mysql
+with cte as (
+select contest_id, gold_medal as medal from Contests
+union all
+select contest_id, silver_medal as medal from Contests
+union all
+select contest_id, bronze_medal as medal from Contests
+),
+cte1 as (
+select medal 
+from (select *, contest_id-row_number() over(partition by medal order by contest_id) as rnk from cte) t 
+group by medal, rnk
+having count(*)>=3
+),
+cte2 as (
+select * from cte1
+union
+select gold_medal as medal from Contests
+group by gold_medal
+having count(*)>=3
+)
+ 
+select b.name, b.mail from cte2 as a
+left join Users as b
+on a.medal=b.user_id
+```
 
 
