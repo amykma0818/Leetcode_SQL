@@ -560,7 +560,19 @@ from cte as a
 left join Players as b
 on a.id=b.player_id
 ```
+### Leetcode 1777. Product's Price for Each Store
 
+Write an SQL query to find the price of each product in each store.
+
+Return the result table in any order.
+```mysql
+select product_id,
+sum(case when store="store1" then price else null end) as "store1",
+sum(case when store="store2" then price else null end) as "store2",
+sum(case when store="store3" then price else null end) as "store3"
+from Products
+group by product_id
+```
 
 
 
