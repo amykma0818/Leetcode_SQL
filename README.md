@@ -573,7 +573,7 @@ sum(case when store="store3" then price else null end) as "store3"
 from Products
 group by product_id
 ```
-
+Note: sum() can't be ignored in this case.
 
 
 
