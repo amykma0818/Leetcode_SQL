@@ -536,9 +536,30 @@ select problem_id from Problems
 where likes/(likes+dislikes)<0.6
 order by problem_id asc
 ```
+### Leetcode 1783. Grand Slam Titles
+Write an SQL query to report the number of grand slam tournaments won by each player. Do not include the players who did not win any tournament.
 
+Return the result table in any order.
+```mysql
+with cte as (
+select id, count(*) as grand_slams_count
+from (
+select Wimbledon as id from Championships
+    union all
+select Fr_open as id from Championships
+    union all
+select US_open as id from Championships
+     union all
+select AU_open as id from Championships
+) t
+group by id    
+)
 
-
+select a.id as player_id, b.player_name, a.grand_slams_count
+from cte as a 
+left join Players as b
+on a.id=b.player_id
+```
 
 
 
