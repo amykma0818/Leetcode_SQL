@@ -594,6 +594,19 @@ on a.task_id=b.task_id and a.subtasks_count=b.subtask_id
 where b.subtask_id is null
 ```
 
+### Leetcode 1757. Recyclable and Low Fat Products
+Write an SQL query to find the ids of products that are both low fat and recyclable.
+
+Return the result table in any order.
+```mysql
+select product_id from Products
+where low_fats="Y" and recyclable="Y"
+```
+
+
+
+
+
 
 
 
