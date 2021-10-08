@@ -575,9 +575,24 @@ group by product_id
 ```
 Note: sum() can't be ignored in this case.
 
+### Leetcode 1767. Find the Subtasks That Did Not Execute
+Write an SQL query to report the IDs of the missing subtasks for each task_id.
 
+Return the result table in any order.
+```mysql
+with recursive cte as (
+select task_id, subtasks_count from Tasks
+    union all
+select task_id, subtasks_count-1 
+    from cte where subtasks_count>1
+)
 
-
+select a.task_id, a.subtasks_count as subtask_id
+from cte as a
+left join Executed as b
+on a.task_id=b.task_id and a.subtasks_count=b.subtask_id
+where b.subtask_id is null
+```
 
 
 
