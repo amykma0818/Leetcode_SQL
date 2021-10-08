@@ -527,8 +527,15 @@ select employee_id, department_id from Employee
 where primary_flag='Y' or
 employee_id not in (select employee_id from Employee where primary_flag='Y')
 ```
+### Leetcode 2026. Low-Quality Problems
+Write an SQL query to report the IDs of the low-quality problems. A LeetCode problem is low-quality if the like percentage of the problem (number of likes divided by the total number of votes) is strictly less than 60%.
 
-
+Return the result table ordered by problem_id in ascending order.
+```mysql
+select problem_id from Problems
+where likes/(likes+dislikes)<0.6
+order by problem_id asc
+```
 
 
 
