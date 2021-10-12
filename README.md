@@ -638,6 +638,32 @@ group by b.employee_id
 order by employee_id
 ```
 
+### 1729. Find Followers Count
+Write an SQL query that will, for each user, return the number of followers.
+
+Return the result table ordered by user_id.
+```mysql
+select user_id, count(*) as followers_count
+from Followers 
+group by user_id
+order by user_id asc
+```
+### 1715. Count Apples and Oranges
+Write an SQL query to count the number of apples and oranges in all the boxes. If a box contains a chest, you should also include the number of apples and oranges it has.
+
+Return the result table in any order.
+```mysql
+select sum(a.apple_count+ifnull(b.apple_count,0)) as apple_count,
+sum(a.orange_count+ifnull(b.orange_count,0)) as orange_count
+from Boxes as a
+left join Chests as b
+on a.chest_id=b.chest_id
+```
+
+
+
+
+
 
 
 
