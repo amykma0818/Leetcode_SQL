@@ -622,6 +622,21 @@ select event_day as day, emp_id, sum(out_time-in_time) as total_time
 from Employees
 group by emp_id, day
 ```
+### 1731. The Number of Employees Which Report to Each Employee
+For this problem, we will consider a manager an employee who has at least 1 other employee reporting to them.
+
+Write an SQL query to report the ids and the names of all managers, the number of employees who report directly to them, and the average age of the reports rounded to the nearest integer.
+
+Return the result table ordered by employee_id.
+```mysql
+select b.employee_id, b.name, count(a.employee_id) as reports_count, 
+round(avg(a.age),0) as average_age
+from Employees as a
+join Employees as b
+on a.reports_to=b.employee_id 
+group by b.employee_id
+order by employee_id
+```
 
 
 
