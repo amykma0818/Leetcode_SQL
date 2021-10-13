@@ -821,6 +821,42 @@ left join cte2 as b
 on a.month=b.month
 order by month asc
 ```
+### Leetcode 1635. Hopper Company Queries I
+Write an SQL query to report the following statistics for each month of 2020:
+
+The number of drivers currently with the Hopper company by the end of the month (active_drivers).
+The number of accepted rides in that month (accepted_rides).
+Return the result table ordered by month in ascending order, where month is the month's number (January is 1, February is 2, etc.).
+```mysql
+with recursive cte as (
+select 1 as month
+union all
+select month+1 from cte
+where month<12
+),
+cte1 as (
+select a.month, ifnull(count(b.driver_id),0) as active_drivers
+from cte as a
+left join Drivers as b
+on (a.month>=month(b.join_date) or year(b.join_date)<2020) and year(b.join_date)<=2020
+group by month
+),
+cte2 as(
+select month(b.requested_at) as month, count(a.ride_id) as accepted_rides
+from AcceptedRides as a
+left join Rides as b
+on a.ride_id=b.ride_id and year(b.requested_at)=2020
+group by month
+)
+
+select a.month, a.active_drivers, ifnull(b.accepted_rides,0) as accepted_rides
+from cte1 as a
+left join cte2 as b
+on a.month=b.month
+order by month
+```
+
+
 
 
 
