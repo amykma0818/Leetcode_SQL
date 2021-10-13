@@ -660,9 +660,25 @@ left join Chests as b
 on a.chest_id=b.chest_id
 ```
 
+### Leetcode 1709. Biggest Window Between Visits
+Assume today's date is '2021-1-1'.
 
+Write an SQL query that will, for each user_id, find out the largest window of days between each visit and the one right after it (or today if you are considering the last visit).
 
+Return the result table ordered by user_id.
+```mysql
+with cte as(
+select *, 
+ifnull(datediff(lead(visit_date,1) over(partition by user_id order by visit_date asc), visit_date),
+       datediff('2021-1-1',visit_date)) as wd
+from UserVisits
+)
 
+select user_id, max(wd) as biggest_window
+from cte 
+group by user_id 
+order by user_id asc
+```
 
 
 
