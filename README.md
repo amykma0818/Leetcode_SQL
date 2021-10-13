@@ -785,8 +785,42 @@ on a.month=b.month
 order by month
 limit 10
 ```
+### Leetcode 1645. Hopper Company Queries II
+Write an SQL query to report the percentage of working drivers (working_percentage) for each month of 2020 
 
+Note that if the number of available drivers during a month is zero, we consider the working_percentage to be 0.
 
+Return the result table ordered by month in ascending order, where month is the month's number (January is 1, February is 2, etc.). Round working_percentage to the nearest 2 decimal places.
+```mysql
+with recursive cte as (
+select 1 as month
+union all
+select month+1 from cte where month<12
+),
+cte1 as (
+select a.month, ifnull(count(b.driver_id),0) as ava_drivers
+from cte as a
+left join Drivers as b
+on (a.month>=month(b.join_date) or year(b.join_date)<2020) and year(b.join_date)<2021
+group by month
+),
+cte2 as(
+select month(b.requested_at) as month, count(distinct a.driver_id) as active_drivers
+from AcceptedRides as a
+left join Rides as b
+on a.ride_id=b.ride_id 
+where year(b.requested_at)=2020
+group by month
+)
+
+select a.month, 
+(case when a.ava_drivers>0 then round(ifnull(b.active_drivers*100/a.ava_drivers,0),2) 
+ else 0 end) as working_percentage 
+from cte1 as a
+left join cte2 as b
+on a.month=b.month
+order by month asc
+```
 
 
 
