@@ -698,14 +698,61 @@ count(*) as call_count, sum(duration) as total_duration
 from cte 
 group by person1, person2
 ```
+### Leetcode 1693. Daily Leads and Partners
+Write an SQL query that will, for each date_id and make_name, return the number of distinct lead_id's and distinct partner_id's.
 
+Return the result table in any order.
 
+```mysql
+select date_id, make_name, count(distinct lead_id) as unique_leads,
+count(distinct partner_id) as unique_partners
+from DailySales
+group by date_id, make_name
+```
+### Leetcode 1683. Invalid Tweets
+Write an SQL query to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15.
 
+Return the result table in any order.
+```mysql
+select tweet_id from Tweets
+where length(content)>15
+```
+### Leetcode 1677. Product's Worth Over Invoices
+Write an SQL query that will, for all products, return each product name with total amount due, paid, canceled, and refunded across all invoices.
 
+Return the result table ordered by product_name.
+```mysql
+select b.name, ifnull(sum(a.rest),0) as rest, ifnull(sum(a.paid),0) as paid, 
+ifnull(sum(a.canceled),0) as canceled, ifnull(sum(a.refunded),0) as refunded
+from Invoice as a
+right join Product as b
+on a.product_id=b.product_id
+group by name
+order by name asc
+```
+### Leetcode 1667. Fix Names in a Table
+Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase.
 
+Return the result table ordered by user_id.
+```mysql
+select user_id, concat(upper(left(name,1)),lower(substr(name,2))) as name
+from Users
+order by user_id
+```
+### Leetcode 1661. Average Time of Process per Machine
+There is a factory website that has several machines each running the same number of processes. Write an SQL query to find the average time each machine takes to complete a process.
 
+The time to complete a process is the 'end' timestamp minus the 'start' timestamp. The average time is calculated by the total time to complete every process on the machine divided by the number of processes that were run.
 
-
+The resulting table should have the machine_id along with the average time as processing_time, which should be rounded to 3 decimal places.
+```mysql
+select a.machine_id, round(avg(b.timestamp-a.timestamp),3) as processing_time 
+from Activity as a
+join Activity as b
+on a.machine_id=b.machine_id and a.process_id=b.process_id
+where a.activity_type='start' and b.activity_type='end'
+group by machine_id
+```
 
 
 
