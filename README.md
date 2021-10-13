@@ -753,8 +753,38 @@ on a.machine_id=b.machine_id and a.process_id=b.process_id
 where a.activity_type='start' and b.activity_type='end'
 group by machine_id
 ```
+### Leetcode 1651. Hopper Company Queries III
+Write an SQL query to compute the average_ride_distance and average_ride_duration of every 3-month window starting from January - March 2020 to October - December 2020. Round average_ride_distance and average_ride_duration to the nearest two decimal places.
 
+The average_ride_distance is calculated by summing up the total ride_distance values from the three months and dividing it by 3. The average_ride_duration is calculated in a similar way.
 
+Return the result table ordered by month in ascending order, where month is the starting month's number (January is 1, February is 2, etc.).
+```mysql
+with recursive cte as (
+select 1 as month
+union all
+select month+1 from cte where month<12
+),
+cte1 as(
+select month(b.requested_at) as month, 
+    sum(a.ride_distance) as distance, sum(a.ride_duration) as duration
+from AcceptedRides as a 
+left join Rides as b
+on a.ride_id=b.ride_id
+where year(b.requested_at)=2020
+group by month
+)
+
+select a.month, 
+round(avg(ifnull(b.distance,0)) over(order by month rows between current row and 2 following),2) as average_ride_distance,
+round(avg(ifnull(b.duration,0)) over(order by month rows between current row and 2 following),2) as 
+average_ride_duration 
+from cte as a
+left join cte1 as b
+on a.month=b.month
+order by month
+limit 10
+```
 
 
 
