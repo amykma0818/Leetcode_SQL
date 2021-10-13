@@ -679,6 +679,41 @@ from cte
 group by user_id 
 order by user_id asc
 ```
+### Leetcode 1699. Number of Calls Between Two Persons
+Write an SQL query to report the number of calls and the total call duration between each pair of distinct persons (person1, person2) where person1 < person2.
+
+Return the result table in any order.
+```mysql 
+with cte as (
+select * from Calls 
+where from_id<to_id
+    union all
+select to_id as from_id, from_id as to_id, duration
+from Calls
+where from_id>to_id
+)
+
+select from_id as person1, to_id as person2,
+count(*) as call_count, sum(duration) as total_duration
+from cte 
+group by person1, person2
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
