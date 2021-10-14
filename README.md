@@ -938,10 +938,24 @@ Write an SQL query to report the name and balance of users with a balance higher
 
 Return the result table in any order.
 ```mysql
+select b.name, sum(a.amount) as balance
+from Transactions as a 
+join Users as b
+on a.account=b.account
+group by name
+having balance>10000
+```
+### Leetcode 1581. Customer Who Visited but Did Not Make Any Transactions
+Write an SQL query to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
 
+Return the result table sorted in any order.
 
-
-
+```mysql
+select customer_id, count(visit_id) as count_no_trans 
+from Visits
+where visit_id not in (select visit_id from Transactions)
+group by customer_id
+```
 
 
 
