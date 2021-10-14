@@ -855,10 +855,18 @@ left join cte2 as b
 on a.month=b.month
 order by month
 ```
+### Leetcode 1633. Percentage of Users Attended a Contest
+Write an SQL query to find the percentage of the users registered in each contest rounded to two decimals.
 
+Return the result table ordered by percentage in descending order. In case of a tie, order it by contest_id in ascending order.
 
-
-
+```mysql
+select contest_id, 
+round(100*count(user_id)/(select count(user_id) from Users),2) as percentage
+from Register
+group by contest_id
+order by percentage desc, contest_id asc
+```
 
 
 
