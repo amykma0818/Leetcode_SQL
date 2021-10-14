@@ -915,6 +915,48 @@ select seller_name from Seller
 where seller_id not in (select seller_id from Orders where year(sale_date)=2020)
 order by seller_name asc
 ```
+### Leetcode 1596. The Most Frequently Ordered Products for Each Customer
+Write an SQL query to find the most frequently ordered product(s) for each customer.
+
+The result table should have the product_id and product_name for each customer_id who ordered at least one order. Return the result table in any order.
+```mysql
+with cte as (
+select *, max(counts) over(partition by customer_id) as max_counts
+from (select customer_id,product_id,count(order_id) as counts
+        from Orders
+        group by customer_id,product_id) as t     
+)
+
+select a.customer_id,a.product_id,b.product_name
+from cte as a
+join Products as b
+on a.product_id=b.product_id
+where a.counts=a.max_counts
+```
+### Leetcode 1587. Bank Account Summary II
+Write an SQL query to report the name and balance of users with a balance higher than 10000. The balance of an account is equal to the sum of the amounts of all transactions involving that account.
+
+Return the result table in any order.
+```mysql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
