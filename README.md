@@ -888,7 +888,24 @@ join SchoolC as c
 on a.student_id!=c.student_id and a.student_name!=c.student_name
 and b.student_id!=c.student_id and b.student_name!=c.student_name
 ```
+### Leetcode 1613. Find the Missing IDs
+Write an SQL query to find the missing customer IDs. The missing IDs are ones that are not in the Customers table but are in the range between 1 and the maximum customer_id present in the table.
 
+Notice that the maximum customer_id will not exceed 100.
+
+Return the result table ordered by ids in ascending order.
+```mysql
+with recursive cte as (
+select 1 as customer_id 
+union all
+select customer_id+1 from cte 
+where customer_id<(select max(customer_id) from Customers)
+)
+
+select customer_id as ids from cte 
+where customer_id not in (select customer_id from Customers)
+order by ids asc
+```
 
 
 
