@@ -906,6 +906,20 @@ select customer_id as ids from cte
 where customer_id not in (select customer_id from Customers)
 order by ids asc
 ```
+### Leetcode 1607. Sellers With No Sales
+Write an SQL query to report the names of all sellers who did not make any sales in 2020.
+
+Return the result table ordered by seller_name in ascending order.
+```mysql
+select seller_name from Seller
+where seller_id not in (select seller_id from Orders where year(sale_date)=2020)
+order by seller_name asc
+```
+
+
+
+
+
 
 
 
