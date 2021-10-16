@@ -956,15 +956,94 @@ from Visits
 where visit_id not in (select visit_id from Transactions)
 group by customer_id
 ```
+### Leetcode 1571. Warehouse Manager
+Write an SQL query to report, How much cubic feet of volume does the inventory occupy in each warehouse.
 
+warehouse_name
+volume
+Return the result table in any order.
+```mysql
+select a.name as warehouse_name, 
+sum(a.units*b.Width*b.Length*b.Height) as volume
+from Warehouse as a
+left join Products as b
+on a.product_id=b.product_id
+group by warehouse_name
+```
 
+### Leetcode 1565. Unique Orders and Customers Per Month
+Write an SQL query to find the number of unique orders and the number of unique customers with invoices > $20 for each different month.
 
+Return the result table sorted in any order.
+```mysql
+select date_format(order_date,"%Y-%m") as month,
+count(distinct order_id) as order_count,
+count(distinct customer_id) as customer_count
+from Orders where invoice>20
+group by month
+```
+### 1555. Bank Account Summary
+Leetcode Bank (LCB) helps its coders in making virtual payments. Our bank records all transactions in the table Transaction, we want to find out the current balance of all users and check wheter they have breached their credit limit (If their current credit is less than 0).
 
+Write an SQL query to report.
 
+user_id
+user_name
+credit, current balance after performing transactions.  
+credit_limit_breached, check credit_limit ("Yes" or "No")
+Return the result table in any order.
 
+```mysql
+with cte as (
+select user_id, sum(credit) as credit 
+from (select user_id, credit from Users
+    union all
+select paid_by, -amount from Transactions
+    union all
+select paid_to, amount from Transactions) t
+group by user_id
+)
 
+select a.user_id,a.user_name, b.credit,
+(case when b.credit<0 then "Yes" else "No" end) as credit_limit_breached 
+from Users as a
+left join cte as b
+on a.user_id=b.user_id
+```
+### Leetcode 1549. The Most Recent Orders for Each Product
+Write an SQL query to find the most recent order(s) of each product.
 
+Return the result table sorted by product_name in ascending order and in case of a tie by the product_id in ascending order. If there still a tie, order them by the order_id in ascending order.
 
+```mysql
+select product_name,product_id,order_id,order_date
+from
+(select b.product_name, a.product_id,a.order_id,a.order_date,
+max(a.order_date) over(partition by a.product_id) as recent
+from Orders as a
+join Products as b
+on a.product_id=b.product_id) t
+where recent=order_date
+order by product_name asc, product_id asc, order_id asc
+```
+
+### Leetcode 1543. Fix Product Name Format
+Since table Sales was filled manually in the year 2000, product_name may contain leading and/or trailing white spaces, also they are case-insensitive.
+
+Write an SQL query to report
+
+product_name in lowercase without leading or trailing white spaces.
+sale_date in the format ('YYYY-MM').
+total the number of times the product was sold in this month.
+Return the result table ordered by product_name in ascending order. In case of a tie, order it by sale_date in ascending order.
+```mysql
+select lower(trim(product_name)) as product_name,
+date_format(sale_date,"%Y-%m") as sale_date, 
+count(sale_id) as total
+from Sales
+group by product_name, date_format(sale_date,"%Y-%m")
+order by product_name asc, sale_date asc
+```
 
 
 
